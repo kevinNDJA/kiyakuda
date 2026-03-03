@@ -58,17 +58,29 @@
                 </div>
                 <div id="piece-group" class="form-group hidden">
                     <label id="piece-label" for="piece">Photo(s) de la pièce</label>
-                    <input id="piece" name="piece" type="file" accept="image/*,.pdf" multiple required>
+                    <div class="file-drop" data-target="piece">
+                        <p class="file-drop-title">Glisse les fichiers ici ou clique pour ajouter</p>
+                        <p class="file-drop-meta" id="piece-meta">Aucun fichier sélectionné</p>
+                        <input id="piece" name="piece" type="file" accept="image/*,.pdf" multiple required>
+                    </div>
                     <small id="piece-hint" class="field-hint">Sélectionnez le type de pièce pour afficher les exigences.</small>
                 </div>
 
                 <div class="form-group">
                     <label for="selfie">Selfie ou photo passeport</label>
-                    <input id="selfie" name="selfie" type="file" accept="image/*" required>
+                    <div class="file-drop" data-target="selfie">
+                        <p class="file-drop-title">Glisse ton selfie ici ou clique pour ajouter</p>
+                        <p class="file-drop-meta" id="selfie-meta">Aucun fichier sélectionné</p>
+                        <input id="selfie" name="selfie" type="file" accept="image/*" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="demande">Demande manuscrite/PDF/Word</label>
-                    <input id="demande" name="demande" type="file" accept=".pdf,.doc,.docx,image/*" required>
+                    <div class="file-drop" data-target="demande">
+                        <p class="file-drop-title">Glisse la demande ici ou clique pour ajouter</p>
+                        <p class="file-drop-meta" id="demande-meta">Aucun fichier sélectionné</p>
+                        <input id="demande" name="demande" type="file" accept=".pdf,.doc,.docx,image/*" required>
+                    </div>
                 </div>
 
                 <div class="form-group full">
@@ -123,6 +135,8 @@
             const pieceLabel = document.getElementById('piece-label');
             const pieceHint = document.getElementById('piece-hint');
             const status = document.getElementById('seller-status');
+            const selfieInput = document.getElementById('selfie');
+            const demandeInput = document.getElementById('demande');
 
             // Remplacer par ton URL Web App Apps Script déployée (voir fichier GOOGLE_SHEETS_SETUP.md).
             const APPS_SCRIPT_URL = "";
@@ -137,6 +151,7 @@
                     pieceInput.value = "";
                     pieceInput.required = true;
                     pieceHint.textContent = "Sélectionnez le type de pièce pour afficher les exigences.";
+                    updateFileMeta(pieceInput, "piece-meta");
                     return;
                 }
 
@@ -150,6 +165,70 @@
                 }
             }
 
+            function updateFileMeta(inputEl, metaId) {
+                const meta = document.getElementById(metaId);
+                if (!meta) return;
+                const files = Array.from(inputEl.files || []);
+                if (!files.length) {
+                    meta.textContent = "Aucun fichier sélectionné";
+                } else if (files.length === 1) {
+                    meta.textContent = "1 fichier: " + files[0].name;
+                } else {
+                    meta.textContent = files.length + " fichiers sélectionnés";
+                }
+            }
+
+            function attachDropzone(inputId, metaId) {
+                const input = document.getElementById(inputId);
+                if (!input) return;
+                const zone = input.closest('.file-drop');
+                if (!zone) return;
+
+                zone.addEventListener('click', function () {
+                    input.click();
+                });
+
+                input.addEventListener('change', function () {
+                    updateFileMeta(input, metaId);
+                });
+
+                ['dragenter', 'dragover'].forEach(function (evtName) {
+                    zone.addEventListener(evtName, function (evt) {
+                        evt.preventDefault();
+                        zone.classList.add('is-dragover');
+                    });
+                });
+
+                ['dragleave', 'drop'].forEach(function (evtName) {
+                    zone.addEventListener(evtName, function (evt) {
+                        evt.preventDefault();
+                        zone.classList.remove('is-dragover');
+                    });
+                });
+
+                zone.addEventListener('drop', function (evt) {
+                    const dt = evt.dataTransfer;
+                    if (!dt || !dt.files || !dt.files.length) return;
+                    const filtered = Array.from(dt.files).filter(function (f) {
+                        const accept = (input.accept || "").split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+                        if (!accept.length) return true;
+                        return accept.some(function (rule) {
+                            if (rule === 'image/*') return (f.type || '').indexOf('image/') === 0;
+                            if (rule.indexOf('.') === 0) return f.name.toLowerCase().endsWith(rule.toLowerCase());
+                            return (f.type || '') === rule;
+                        });
+                    });
+                    const transfer = new DataTransfer();
+                    if (input.multiple) {
+                        filtered.forEach(function (f) { transfer.items.add(f); });
+                    } else if (filtered[0]) {
+                        transfer.items.add(filtered[0]);
+                    }
+                    input.files = transfer.files;
+                    updateFileMeta(input, metaId);
+                });
+            }
+
             function validatePieceCount() {
                 const selectedType = typePiece.value;
                 const count = pieceInput.files.length;
@@ -161,6 +240,9 @@
 
             typePiece.addEventListener('change', updatePieceRequirement);
             updatePieceRequirement();
+            attachDropzone('piece', 'piece-meta');
+            attachDropzone('selfie', 'selfie-meta');
+            attachDropzone('demande', 'demande-meta');
 
             function readFileAsBase64(file) {
                 return new Promise(function (resolve, reject) {
@@ -205,15 +287,15 @@
 
                 const sizeError =
                     validateFileSize(pieceInput, "Fichier de piece") ||
-                    validateFileSize(document.getElementById('selfie'), "Fichier selfie") ||
-                    validateFileSize(document.getElementById('demande'), "Fichier demande");
+                    validateFileSize(selfieInput, "Fichier selfie") ||
+                    validateFileSize(demandeInput, "Fichier demande");
                 if (sizeError) {
                     status.textContent = sizeError;
                     return;
                 }
 
-                const selfieFile = document.getElementById('selfie').files[0];
-                const demandeFile = document.getElementById('demande').files[0];
+                const selfieFile = selfieInput.files[0];
+                const demandeFile = demandeInput.files[0];
 
                 const payload = {
                     timestamp: new Date().toISOString(),
@@ -242,6 +324,9 @@
                     status.textContent = "Demande envoyee et enregistree avec succes.";
                     form.reset();
                     updatePieceRequirement();
+                    updateFileMeta(pieceInput, 'piece-meta');
+                    updateFileMeta(selfieInput, 'selfie-meta');
+                    updateFileMeta(demandeInput, 'demande-meta');
                 } catch (error) {
                     status.textContent = "Echec d'enregistrement. Verifie APPS_SCRIPT_URL, les droits Apps Script et la taille des fichiers.";
                 }
