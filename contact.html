@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Kiyakuda">
+    <title>Kiyakuda | Contact</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favi.png" type="image/png">
+</head>
+<body>
+    <div class="bg-video-wrap" aria-hidden="true">
+        <video autoplay muted loop playsinline>
+            <source src="bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header class="container">
+        <nav class="navbar has-mobile-menu" aria-label="Navigation principale">
+            <img src="kiyakuda.png" alt="Logo Kiyakuda" class="logo">
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav-contact">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">Ouvrir le menu</span>
+            </button>
+            <ul class="nav-links" id="main-nav-contact">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="user.html">Espace vendeur</a></li>
+                <li><a href="produit.html">Produits</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container grid">
+        <section class="card reveal">
+            <h1>Contact</h1>
+            <p>Utilise ce formulaire pour nous envoyer un message.</p>
+            <form class="form-grid" action="#" method="post">
+                <div class="form-group">
+                    <label for="nom_contact">Nom complet</label>
+                    <input id="nom_contact" name="nom_contact" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="email_contact">Email</label>
+                    <input id="email_contact" name="email_contact" type="email" required>
+                </div>
+                <div class="form-group full">
+                    <label for="message_contact">Message</label>
+                    <textarea id="message_contact" name="message_contact" required></textarea>
+                </div>
+                <div class="form-group full">
+                    <button class="btn" type="submit">Envoyer</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card reveal delay-1">
+            <h2>Informations</h2>
+            <p>Email: bahamkevinsonn@gmail.com</p>
+            <p>Téléphone: +228 93 32 63 88</p>
+            <p>Adresse: Atéda, Kara, Togo</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>2026 Kiyakuda. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        (function () {
+            const nav = document.querySelector('.has-mobile-menu');
+            if (!nav) return;
+            const button = nav.querySelector('.menu-toggle');
+            const links = nav.querySelector('.nav-links');
+            if (!button || !links) return;
+
+            button.addEventListener('click', function () {
+                const expanded = button.getAttribute('aria-expanded') === 'true';
+                button.setAttribute('aria-expanded', String(!expanded));
+                links.classList.toggle('is-open');
+            });
+        })();
+    </script>
+</body>
+</html>

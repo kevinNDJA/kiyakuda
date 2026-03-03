@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catalogue de produits Kiyakuda">
+    <title>Kiyakuda | Produits</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favi.png" type="image/png">
+</head>
+<body>
+    <div class="bg-video-wrap" aria-hidden="true">
+        <video autoplay muted loop playsinline>
+            <source src="bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header class="container">
+        <nav class="navbar has-mobile-menu" aria-label="Navigation principale">
+            <img src="kiyakuda.png" alt="Logo Kiyakuda" class="logo">
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav-produit">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">Ouvrir le menu</span>
+            </button>
+            <ul class="nav-links" id="main-nav-produit">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="user.html">Espace vendeur</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container grid">
+        <section class="card reveal">
+            <h1>Produits disponibles</h1>
+            <p class="note">Exemples de produits avec prix de base (à personnaliser).</p>
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Prix de base</th>
+                        <th>Catégorie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sac à dos</td>
+                        <td>12 000 FCFA</td>
+                        <td>Accessoires</td>
+                    </tr>
+                    <tr>
+                        <td>Chaussures sport</td>
+                        <td>18 500 FCFA</td>
+                        <td>Mode</td>
+                    </tr>
+                    <tr>
+                        <td>Casque audio</td>
+                        <td>9 000 FCFA</td>
+                        <td>Électronique</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="card reveal delay-1">
+            <h2>Note client</h2>
+            <p>
+                Le prix final dépend du vendeur et de sa marge. Vérifiez toujours les détails de l'offre avant achat.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>2026 Kiyakuda. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        (function () {
+            const nav = document.querySelector('.has-mobile-menu');
+            if (!nav) return;
+            const button = nav.querySelector('.menu-toggle');
+            const links = nav.querySelector('.nav-links');
+            if (!button || !links) return;
+
+            button.addEventListener('click', function () {
+                const expanded = button.getAttribute('aria-expanded') === 'true';
+                button.setAttribute('aria-expanded', String(!expanded));
+                links.classList.toggle('is-open');
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿Créer un business
+
+OBJECTIF
+Je stocke des produits physiques avec leur prix de départ. Ensuite, je confie ces produits à des vendeurs qui font la promotion au prix de leur choix (avec marge).
+
+CÔTÉ SITE WEB
+Nom: Kiyakuda
+Logo: kiyakuda.png
+Favicon: favi.png
+
+ACTIVITÉ DU SITE
+Le site présente 3 espaces:
+1. Vendeur (commander et revendre)
+2. Acheteur (acheter pour usage personnel)
+3. Administrateur (gérer produits, administrateurs, utilisateurs)
+
+POINT IMPORTANT
+Les vendeurs doivent remplir un questionnaire et accepter la politique d'utilisation:
+- Nom
+- Prénom
+- Type de carte: identité (recto/verso), électeur (recto/verso), scolaire, étudiant (recto/verso)
+- Selfie ou photo passeport
+- Demande manuscrite ou document PDF/Word
+
+VALIDATION DES UTILISATEURS
+Si la validation manuelle n'est pas faite dans les 10 minutes après soumission du formulaire, la validation devient automatique.
+
+ADMINISTRATION
+Je suis l'administrateur principal du site et je peux annuler un compte client à tout moment avec motif.

@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Bienvenue sur Kiyakuda, votre destination pour vendre et acheter des produits avec un système simple et transparent.">
+    <meta name="keywords" content="Kiyakuda, vente, promotion, boutique, Kara">
+    <meta name="author" content="Kevin Baham">
+    <title>Kiyakuda | Accueil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favi.png" type="image/png">
+</head>
+<body class="home">
+    <div class="bg-video-wrap" aria-hidden="true">
+        <video autoplay muted loop playsinline>
+            <source src="bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header class="container">
+        <nav class="navbar has-mobile-menu" aria-label="Navigation principale">
+            <img src="kiyakuda.png" alt="Logo Kiyakuda" class="logo">
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">Ouvrir le menu</span>
+            </button>
+            <ul class="nav-links" id="main-nav">
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="user.html">Espace vendeur</a></li>
+                <li><a href="produit.html">Produits</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="cinema-main" aria-label="Intro cinématique">
+            <div class="cinema-intro">
+                <p class="scene-kicker">Kiyakuda Présente</p>
+                <h1 class="scene-title">LE MARCHÉ COMMENCE ICI</h1>
+                <p class="scene-subtitle">Une nouvelle façon de vendre, d'acheter et de progresser ensemble.</p>
+                <p class="scene-voice">Dans la région de la Kara, chaque produit devient une opportunité.</p>
+                <section class="action-row scene-actions" aria-label="Entrer dans le site">
+                    <a class="btn" href="produit.html">Entrer comme client</a>
+                    <a class="btn-outline" href="user.html">Entrer comme promoteur</a>
+                </section>
+                <p class="scene-note">Appuie sur commencer et entre dans l'histoire Kiyakuda.</p>
+            </div>
+        </section>
+
+        <section class="grid trust-grid section" aria-label="Arguments de confiance">
+            <article class="card reveal">
+                <h3>Prix de base garantis</h3>
+                <p>Chaque produit a un prix de départ clair. Vous ajoutez seulement votre marge commerciale.</p>
+            </article>
+            <article class="card reveal delay-1">
+                <h3>Validation sécurisée</h3>
+                <p>Les vendeurs soumettent un dossier complet pour protéger la communauté et limiter les fraudes.</p>
+            </article>
+            <article class="card reveal delay-2">
+                <h3>Primes de performance</h3>
+                <p>Les meilleurs promoteurs du mois reçoivent des bonus selon les résultats réalisés.</p>
+            </article>
+        </section>
+
+        <section class="grid products-grid section" aria-label="Produits populaires">
+            <article class="card reveal">
+                <h2>Produits populaires</h2>
+                <p class="note">Sélection du moment</p>
+                <table class="product-table">
+                    <thead>
+                        <tr>
+                            <th>Produit</th>
+                            <th>Prix de base</th>
+                            <th>Disponibilité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chaussures sport</td>
+                            <td>18 500 FCFA</td>
+                            <td>En stock</td>
+                        </tr>
+                        <tr>
+                            <td>Sac à dos urbain</td>
+                            <td>12 000 FCFA</td>
+                            <td>En stock</td>
+                        </tr>
+                        <tr>
+                            <td>Casque audio</td>
+                            <td>9 000 FCFA</td>
+                            <td>Stock limité</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <section class="action-row" aria-label="Actions catalogue">
+                    <a class="btn" href="produit.html">Voir tout le catalogue</a>
+                </section>
+            </article>
+        </section>
+
+        <section class="grid flow-grid section" aria-label="Fonctionnement">
+            <article class="card reveal">
+                <h2>Comment ça marche</h2>
+                <ol class="info-list" type="I">
+                    <li>
+                        <h3>Comment utiliser Kiyakuda</h3>
+                        <p>Vous choisissez un article, le prix de base est fixé à l'avance, puis vous vendez avec votre marge.</p>
+                    </li>
+                    <li>
+                        <h3>Comment les promoteurs sont payés</h3>
+                        <p>Kiyakuda ne verse pas de salaire fixe. Le revenu vient de la marge sur les ventes réalisées.</p>
+                    </li>
+                    <li>
+                        <h3>Primes mensuelles</h3>
+                        <p>Des primes sont offertes aux cinq meilleurs promoteurs du mois.</p>
+                    </li>
+                </ol>
+            </article>
+        </section>
+
+        <section class="panel section reveal" aria-label="Présentation locale">
+            <h2>Kiyakuda à Kara</h2>
+            <p>
+                Kiyakuda est une boutique située dans la région de la Kara, plus précisément à Atéda.
+                Nous aidons les jeunes à démarrer dans la promotion de produits avec un cadre clair,
+                même sans capital de départ.
+            </p>
+            <section class="action-row" aria-label="Actions finales">
+                <a class="btn" href="user.html">Créer mon compte vendeur</a>
+                <a class="btn-outline" href="contact.html">Parler à un conseiller</a>
+            </section>
+        </section>
+    </main>
+
+    <footer>
+        <p>2026 Kiyakuda. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        (function () {
+            const nav = document.querySelector('.has-mobile-menu');
+            if (!nav) return;
+            const button = nav.querySelector('.menu-toggle');
+            const links = nav.querySelector('.nav-links');
+            if (!button || !links) return;
+
+            button.addEventListener('click', function () {
+                const expanded = button.getAttribute('aria-expanded') === 'true';
+                button.setAttribute('aria-expanded', String(!expanded));
+                links.classList.toggle('is-open');
+            });
+        })();
+    </script>
+</body>
+</html>
