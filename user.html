@@ -46,8 +46,7 @@
                     <input id="prenom" name="prenom" type="text" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="type_piece">Type de pièce</label>
+                <div class="form-group floating-select">
                     <select id="type_piece" name="type_piece" required>
                         <option value="">Choisir une option</option>
                         <option value="identite">Carte d'identité (recto/verso)</option>
@@ -55,6 +54,7 @@
                         <option value="scolaire">Carte scolaire</option>
                         <option value="etudiant">Carte d'étudiant (recto/verso)</option>
                     </select>
+                    <label for="type_piece">Type de pièce</label>
                 </div>
                 <div id="piece-group" class="form-group hidden">
                     <label id="piece-label" for="piece">Photo(s) de la pièce</label>
@@ -109,7 +109,7 @@
     </main>
 
     <footer>
-        <p>2026 Kiyakuda. Tous droits réservés.</p>
+        <p>&copy; 2026 Kiyakuda. Tous droits réservés.</p>
     </footer>
 
     <script>
@@ -141,8 +141,16 @@
             // Remplacer par ton URL Web App Apps Script déployée (voir fichier GOOGLE_SHEETS_SETUP.md).
             const APPS_SCRIPT_URL = "";
             const MAX_FILE_SIZE_MB = 8;
+            const ADMIN_EMAIL = "bahamkevinsonn@gmail.com";
 
             if (!form || !typePiece || !pieceGroup || !pieceInput || !pieceLabel || !pieceHint || !status) return;
+
+            function getBaseUrl() {
+                const url = new URL(window.location.href);
+                url.search = "";
+                url.hash = "";
+                return url.toString();
+            }
 
             function updatePieceRequirement() {
                 const value = typePiece.value;
@@ -298,6 +306,7 @@
                 const demandeFile = demandeInput.files[0];
 
                 const payload = {
+                    action: "create_signup",
                     timestamp: new Date().toISOString(),
                     nom: document.getElementById('nom').value.trim(),
                     prenom: document.getElementById('prenom').value.trim(),
@@ -305,7 +314,7 @@
                 };
 
                 if (!APPS_SCRIPT_URL) {
-                    status.textContent = "Formulaire valide. Configure APPS_SCRIPT_URL dans user.html pour envoyer les fichiers sur Drive et enregistrer Sheets.";
+                    status.textContent = "Configure APPS_SCRIPT_URL dans user.html pour activer la validation centralisee.";
                     return;
                 }
 
@@ -320,8 +329,22 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     });
-                    if (!response.ok) throw new Error("Erreur réseau");
-                    status.textContent = "Demande envoyee et enregistree avec succes.";
+                    const data = await response.json();
+                    if (!response.ok || !data.ok) throw new Error((data && data.message) || "Erreur reseau");
+
+                    const subject = "Validation inscription Kiyakuda - " + data.id;
+                    const bodyText =
+                        "Nouvelle inscription en attente de validation.\n\n" +
+                        "Reference: " + data.id + "\n" +
+                        "Nom: " + payload.nom + "\n" +
+                        "Prenom: " + payload.prenom + "\n" +
+                        "Type piece: " + payload.type_piece + "\n\n" +
+                        "VALIDER:\n" + data.validate_link + "\n\n" +
+                        "REJETER:\n" + data.reject_link;
+                    const mailto = "mailto:" + ADMIN_EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(bodyText);
+                    window.location.href = mailto;
+
+                    status.textContent = "Inscription en attente. Ouvre ton mail pour valider ou rejeter.";
                     form.reset();
                     updatePieceRequirement();
                     updateFileMeta(pieceInput, 'piece-meta');

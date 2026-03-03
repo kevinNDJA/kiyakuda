@@ -1,42 +1,53 @@
-# Google Drive + Google Sheets Setup
+# Google Drive + Google Sheets Setup (Validation centralisee)
 
-Goal: save seller registration data into Google Sheets and upload files into your Drive folder:
+Objectif:
+- stock global centralise,
+- commandes en attente puis validation/rejet par email,
+- inscriptions en attente puis validation/rejet par email,
+- fichiers d'inscription enregistres dans Drive.
+
+Dossier Drive cible:
 `https://drive.google.com/drive/folders/1HeImS3dG74QSnR4Tie3CJLrpLl-S38oo`
 
-## 1) Create the sheet
-1. Open your Drive folder above.
-2. Create a Google Sheets file (example: `Inscriptions_Kiyakuda`).
-3. In the first sheet (`Feuille 1`), add headers in row 1:
-`timestamp | nom | prenom | type_piece | piece_links | selfie_link | demande_link`
+## 1) Creer le Google Sheets
+1. Ouvre le dossier Drive.
+2. Cree un fichier Google Sheets (ex: `Kiyakuda_Backoffice`).
+3. Copie l'ID du fichier (dans son URL).
 
-## 2) Apps Script
-1. Open `https://script.new`.
-2. Replace `Code.gs` with project file: `apps_script_Code.gs`.
-3. In `Code.gs`, set:
-- `SPREADSHEET_ID` (from Google Sheets URL)
-- `SHEET_NAME` (default is `Feuille 1`)
-- `DRIVE_FOLDER_ID` is already set to your folder ID
+Note: les onglets `Signups`, `Orders`, `Stocks` seront crees automatiquement par Apps Script.
 
-## 3) Deploy Web App
-1. Click `Deploy` -> `New deployment`.
+## 2) Configurer Apps Script
+1. Ouvre `https://script.new`.
+2. Remplace `Code.gs` par le contenu de `apps_script_Code.gs`.
+3. Renseigne:
+- `SPREADSHEET_ID` = ID du Google Sheets.
+- `DRIVE_FOLDER_ID` est deja renseigne (ton dossier).
+
+## 3) Deployer en Web App
+1. `Deploy` -> `New deployment`.
 2. Type: `Web app`.
 3. Execute as: `Me`.
-4. Who has access: `Anyone with the link`.
-5. Deploy and copy the Web App URL.
+4. Access: `Anyone with the link`.
+5. Deploie et copie l'URL Web App.
 
-## 4) Connect website
-1. Open `user.html`.
-2. Find `const APPS_SCRIPT_URL = "";`
-3. Paste your Web App URL there.
+## 4) Connecter le site
+1. Ouvre `user.html` et colle l'URL dans `APPS_SCRIPT_URL`.
+2. Ouvre `produit.html` et colle la meme URL dans `APPS_SCRIPT_URL`.
 
-## 5) Test flow
-1. Open `user.html` in browser.
-2. Fill the form + select files.
-3. Submit.
-4. Check:
-- files created in your Drive folder
-- links written in your Google Sheet
+## 5) Fonctionnement
+- `produit.html`
+  - lit le stock via `action=get_stocks`,
+  - cree une commande `PENDING` via `action=create_order`,
+  - envoie un email avec liens `validate_order` / `reject_order`.
+- `user.html`
+  - cree une inscription `PENDING` via `action=create_signup`,
+  - upload les fichiers dans Drive,
+  - envoie un email avec liens `validate_signup` / `reject_signup`.
 
-## Notes
-- Current client limit in `user.html`: 8 MB per file.
-- If files are too large, reduce file size or implement backend chunk upload.
+## 6) Test rapide
+1. Passe une commande et soumets une inscription.
+2. Ouvre l'email admin et clique `VALIDER` ou `REJETER`.
+3. Verifie:
+- statut dans les onglets `Orders` / `Signups`,
+- stock mis a jour seulement apres `validate_order`,
+- fichiers presents dans le dossier Drive.
