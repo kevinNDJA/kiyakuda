@@ -1,5 +1,6 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
+/* Variables globales de theme */
 :root {
     --text: #f4ead9;
     --muted: rgba(244, 234, 217, 0.78);
@@ -14,6 +15,7 @@
     box-sizing: border-box;
 }
 
+/* Structure de base */
 body {
     margin: 0;
     font-family: "Manrope", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -29,6 +31,7 @@ body {
 }
 
 .bg-video-wrap video {
+    /* === Vitrine produits e-commerce === */
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -53,6 +56,7 @@ body {
     animation: grain-shift 0.3s steps(2) infinite;
 }
 
+/* Liens et conteneur principal */
 a {
     color: inherit;
     text-decoration: none;
@@ -67,9 +71,12 @@ header.container {
     position: sticky;
     top: 0;
     z-index: 20;
+    background: rgba(8, 8, 8, 0.28);
+    -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
 }
 
+/* Navigation */
 .navbar {
     display: flex;
     align-items: center;
@@ -139,6 +146,7 @@ header.container {
     border: 0;
 }
 
+/* Sections d'accueil */
 main {
     padding-bottom: 2rem;
 }
@@ -216,6 +224,7 @@ main {
     animation-delay: 2.7s;
 }
 
+/* Cartes et layouts generaux */
 .section {
     margin-top: 1.1rem;
 }
@@ -290,6 +299,7 @@ h2 {
     font-size: 0.92rem;
 }
 
+/* Listes informatives */
 .info-list {
     margin: 0;
     padding-left: 1.1rem;
@@ -297,27 +307,6 @@ h2 {
 
 .info-list li {
     margin-bottom: 0.7rem;
-}
-
-.product-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.product-table thead th {
-    text-align: left;
-    padding: 0.78rem 0.72rem;
-    font-size: 0.9rem;
-    color: #ffe7c9;
-    background: rgba(255, 255, 255, 0.09);
-}
-
-.product-table tbody td {
-    padding: 0.78rem 0.72rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .product-catalog {
@@ -363,6 +352,7 @@ h2 {
     cursor: not-allowed;
 }
 
+/* Grille formulaires */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -379,6 +369,7 @@ h2 {
     font-weight: 600;
 }
 
+/* Select flottant (formulaire inscription) */
 .floating-select {
     position: relative;
 }
@@ -410,6 +401,7 @@ h2 {
     color: #ffd7b3;
 }
 
+/* Utilitaires formulaire */
 .hidden {
     display: none !important;
 }
@@ -426,6 +418,7 @@ h2 {
     color: #ffd9b0;
 }
 
+/* Inputs communs */
 input,
 select,
 textarea,
@@ -475,6 +468,7 @@ select option {
     background: #1c1715;
 }
 
+/* Zone d'upload (drag-and-drop) */
 input[type="file"] {
     width: 1px;
     height: 1px;
@@ -517,6 +511,91 @@ input[type="file"] {
     color: var(--muted);
 }
 
+/* Aperçu des fichiers avec actions de validation/suppression */
+.file-preview-list {
+    margin-top: 0.55rem;
+    display: grid;
+    gap: 0.5rem;
+}
+
+.file-preview-item {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.45rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.file-preview-item.is-approved {
+    border-color: rgba(83, 199, 139, 0.62);
+    background: rgba(83, 199, 139, 0.1);
+}
+
+.file-preview-thumb,
+.file-preview-doc {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.file-preview-doc {
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #ffe2c3;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.file-preview-pdf {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.file-preview-info {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.82rem;
+}
+
+.file-preview-actions {
+    display: flex;
+    gap: 0.35rem;
+}
+
+.mini-btn {
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.11);
+    color: #ffe5c6;
+    border-radius: 8px;
+    padding: 0.28rem 0.52rem;
+    font-size: 0.76rem;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.mini-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.mini-btn:disabled {
+    opacity: 0.68;
+    cursor: default;
+}
+
+.danger-btn {
+    color: #ffd0cc;
+    border-color: rgba(255, 126, 118, 0.42);
+    background: rgba(255, 126, 118, 0.14);
+}
+
+/* Footer */
 textarea {
     min-height: 120px;
     resize: vertical;
@@ -532,6 +611,7 @@ footer {
     padding: 1rem 0 1.4rem;
 }
 
+/* Delais d'animation utilitaires */
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.2s; }
 .delay-3 { animation-delay: 0.3s; }
@@ -550,6 +630,7 @@ footer {
     100% { transform: translate(-2px, 2px); }
 }
 
+/* Responsive mobile */
 @media (max-width: 760px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -585,8 +666,36 @@ footer {
     .product-thumb {
         height: 140px;
     }
+
+    .file-preview-item {
+        grid-template-columns: 48px 1fr;
+        gap: 0.45rem;
+        padding: 0.42rem;
+    }
+
+    .file-preview-thumb,
+    .file-preview-doc {
+        width: 48px;
+        height: 48px;
+    }
+
+    .file-preview-info {
+        font-size: 0.78rem;
+    }
+
+    .file-preview-actions {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .mini-btn {
+        padding: 0.26rem 0.48rem;
+        font-size: 0.72rem;
+    }
 }
 
+/* Responsive desktop */
 @media (min-width: 900px) {
     .trust-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));

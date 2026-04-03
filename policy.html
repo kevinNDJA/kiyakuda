@@ -1,0 +1,94 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Politique d'utilisation Kiyakuda pour vendeurs et clients">
+    <title>Kiyakuda | Politique d'utilisation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favi.png" type="image/png">
+</head>
+<body>
+    <!-- Fond vidéo global -->
+    <div class="bg-video-wrap" aria-hidden="true">
+        <video autoplay muted loop playsinline>
+            <source src="bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- En-tête + navigation -->
+    <header class="container">
+        <nav class="navbar has-mobile-menu" aria-label="Navigation principale">
+            <img src="kiyakuda.png" alt="Logo Kiyakuda" class="logo">
+            <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav-policy">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span class="sr-only">Ouvrir le menu</span>
+            </button>
+            <ul class="nav-links" id="main-nav-policy">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="produit.html">Produits</a></li>
+                <li><a href="user.html">Espace vendeur</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Contenu politique -->
+    <main class="container grid">
+        <section class="card reveal">
+            <h1>Politique de livraison et d'achat</h1>
+            <p class="note">Dernière mise à jour : 2 avril 2026</p>
+
+            <h2>Livraison</h2>
+            <ul class="info-list">
+                <li>La livraison est disponible partout au Togo.</li>
+                <li>Le prix de la livraison dépend de l'article choisi, de son poids, de sa taille et de la destination.</li>
+                <li>Le montant exact de la livraison sera communiqué lors de la prise de contact pour l'achat.</li>
+                <li>Le paiement de la livraison s'effectue à la réception du colis ou selon l'accord convenu avec le vendeur.</li>
+            </ul>
+
+            <h2>Achat et contact</h2>
+            <ul class="info-list">
+                <li>Pour acheter un produit, cliquez sur "Acheter ce produit" sur la page d'accueil.</li>
+                <li>Vous serez redirigé vers WhatsApp, Telegram ou l'appel téléphonique pour discuter directement avec le vendeur.</li>
+                <li>Un message automatique sera envoyé : "Ce produit a incité ma curiosité, pouvons-nous en parler ?" accompagné de l'image du produit.</li>
+                <li>Aucune inscription ou création de compte n'est nécessaire.</li>
+            </ul>
+
+            <h2>Protection des données</h2>
+            <ul class="info-list">
+                <li>Les informations échangées lors du contact sont strictement confidentielles et utilisées uniquement pour la transaction.</li>
+                <li>Aucune donnée personnelle n'est stockée sur le site.</li>
+            </ul>
+
+            <h2>Contact</h2>
+            <p>Pour toute question, contactez-nous via WhatsApp ou Telegram :<br>
+                WhatsApp/Appel : <a href="tel:+22879664863">+228 79 66 48 63</a><br>
+                Telegram : <a href="https://t.me/Bahamkevin" target="_blank" rel="noopener">Bahamkevin</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Kiyakuda. Livraison partout au Togo. Prix de livraison selon article, poids et taille.</p>
+    </footer>
+
+    <script>
+        // Menu mobile: ouverture/fermeture
+        (function () {
+            const nav = document.querySelector('.has-mobile-menu');
+            if (!nav) return;
+            const button = nav.querySelector('.menu-toggle');
+            const links = nav.querySelector('.nav-links');
+            if (!button || !links) return;
+
+            button.addEventListener('click', function () {
+                const expanded = button.getAttribute('aria-expanded') === 'true';
+                button.setAttribute('aria-expanded', String(!expanded));
+                links.classList.toggle('is-open');
+            });
+        })();
+    </script>
+</body>
+</html>
