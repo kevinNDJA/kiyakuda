@@ -214,8 +214,7 @@ function initBackgroundVideo() {
 
     const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const shouldDisableVideo =
-        window.matchMedia("(max-width: 760px)").matches
-        || window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches
         || Boolean(connection && (connection.saveData || /2g/.test(connection.effectiveType || "")));
 
     wrappers.forEach((wrapper) => {
