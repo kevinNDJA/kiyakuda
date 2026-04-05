@@ -10,12 +10,6 @@
     <script src="app.js" defer></script>
 </head>
 <body data-page="catalog">
-    <div class="bg-video-wrap" aria-hidden="true">
-        <video muted loop playsinline preload="none" data-bg-video>
-            <source data-src="bg.mp4" type="video/mp4">
-        </video>
-    </div>
-
     <header class="site-header">
         <nav class="navbar">
             <a class="brand" href="index.html" aria-label="Kiyakuda accueil">
@@ -40,20 +34,24 @@
             <div class="site-shell section-card reveal">
                 <span class="eyebrow">Boutique</span>
                 <h1>Tous les produits</h1>
-                <p class="lead">Catalogue classe par ordre alphabetique avec recherche rapide et ajout direct au panier.</p>
+                <p class="lead">Catalogue sombre, recherche directe et presentation inspiree des marketplaces.</p>
             </div>
         </section>
 
         <section class="section-block">
             <div class="site-shell section-card reveal">
-                <div class="action-row" data-category-filters style="margin-bottom: 1rem;"></div>
-                <div class="catalog-toolbar">
+                <div class="catalog-marketbar">
                     <label class="search-field" aria-label="Rechercher un produit">
                         <span data-icon="search"></span>
                         <input type="search" placeholder="Rechercher des produits dans la boutique" data-product-search>
                     </label>
-                    <span class="sort-note">Classement A - Z : <strong data-result-count>0 produit</strong></span>
+                    <label class="search-field category-field" aria-label="Choisir une categorie">
+                        <span data-icon="layers"></span>
+                        <input type="search" list="category-options" placeholder="Categorie produit" data-category-input>
+                    </label>
+                    <datalist id="category-options" data-category-options></datalist>
                 </div>
+                <span class="sort-note">Classement A - Z : <strong data-result-count>0 produit</strong></span>
                 <div class="product-grid" data-product-grid></div>
                 <div class="empty-state is-hidden" data-empty-state>
                     <span class="eyebrow">Resultat</span>

@@ -168,6 +168,10 @@ const PAYMENT_PAGES = {
     visa: "paiement-visa.html"
 };
 const SHOP_LINKS = {
+    tiktok: "https://www.tiktok.com/",
+    facebook: "https://www.facebook.com/",
+    instagram: "https://www.instagram.com/",
+    twitter: "https://x.com/",
     whatsapp: "https://wa.me/22879664863",
     telegram: "https://t.me/BahamKevin",
     phone: "tel:+22879664863",
@@ -177,8 +181,7 @@ const SHOP_LINKS = {
 const STORAGE_KEYS = {
     cart: "kiyakuda-cart",
     order: "kiyakuda-last-order",
-    shipping: "kiyakuda-shipping-region",
-    theme: "kiyakuda-theme"
+    shipping: "kiyakuda-shipping-region"
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -255,41 +258,7 @@ function initStaticIcons() {
 }
 
 function initTheme() {
-    const storedTheme = window.localStorage.getItem(STORAGE_KEYS.theme);
-    const theme = storedTheme === "dark" || storedTheme === "light"
-        ? storedTheme
-        : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-
-    applyTheme(theme);
-
-    const nav = document.querySelector(".navbar");
-    const navLinks = document.querySelector("[data-nav-links]");
-    if (!nav || !navLinks || nav.querySelector("[data-theme-toggle]")) return;
-
-    const toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "theme-toggle";
-    toggle.setAttribute("data-theme-toggle", "true");
-    nav.appendChild(toggle);
-
-    const render = () => {
-        const activeTheme = document.body.dataset.theme === "dark" ? "dark" : "light";
-        toggle.innerHTML = icon(activeTheme === "dark" ? "sun" : "moon");
-        toggle.setAttribute("aria-label", activeTheme === "dark" ? "Passer en mode clair" : "Passer en mode sombre");
-        toggle.setAttribute("title", activeTheme === "dark" ? "Mode clair" : "Mode sombre");
-    };
-
-    render();
-    toggle.addEventListener("click", () => {
-        const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
-        applyTheme(nextTheme);
-        render();
-    });
-}
-
-function applyTheme(theme) {
-    document.body.dataset.theme = theme;
-    window.localStorage.setItem(STORAGE_KEYS.theme, theme);
+    document.body.dataset.theme = "dark";
 }
 
 function initMarketplaceChrome() {
@@ -328,24 +297,31 @@ function decorateFooters() {
 
         const copy = footer.querySelector(".footer-top p");
         if (copy) {
-            copy.textContent = "Boutique en ligne de produits physiques, validation manuelle des commandes et paiements selon le mode choisi.";
+            copy.textContent = "Marketplace premium, commandes manuelles et paiement accompagne depuis Kara.";
         }
 
         if (footer.querySelector("[data-footer-market]")) return;
 
         const wrapper = document.createElement("div");
         wrapper.setAttribute("data-footer-market", "true");
-        wrapper.className = "footer-market";
+        wrapper.className = "footer-market footer-market--premium";
         wrapper.innerHTML = `
-            <div class="footer-logos">
-                <img class="brand-logo-image" src="logo-mixx.svg" alt="Mixx Togo">
-                <img class="brand-logo-image" src="logo-moov.svg" alt="Moov Togo">
-                <img class="brand-logo-image" src="logo-visa.svg" alt="Visa">
+            <div class="footer-columns">
+                <div class="footer-brand-block">
+                    <strong>Kiyakuda</strong>
+                    <p class="copy-muted">Une experience marketplace sombre, inspiree des grandes plateformes B2B, avec paiement mobile et carte.</p>
+                </div>
+                <div class="footer-logos footer-logos--premium">
+                    <img class="brand-logo-image" src="logo-yas-official.jpeg" alt="Yas">
+                    <img class="brand-logo-image" src="logo-moov-official.png" alt="Moov">
+                    <img class="brand-logo-image" src="logo-visa.svg" alt="Visa">
+                </div>
             </div>
-            <div class="footer-socials">
-                <a class="social-logo" href="${SHOP_LINKS.whatsapp}" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="logo-whatsapp.svg" alt="WhatsApp"></a>
-                <a class="social-logo" href="${SHOP_LINKS.telegram}" target="_blank" rel="noopener" aria-label="Telegram"><img src="logo-telegram.svg" alt="Telegram"></a>
-                <a class="social-logo" href="${SHOP_LINKS.phone}" aria-label="Appel"><img src="logo-call.svg" alt="Appel"></a>
+            <div class="footer-socials footer-socials--premium">
+                <a class="social-link" href="${SHOP_LINKS.tiktok}" target="_blank" rel="noopener" aria-label="TikTok">${icon("tiktok", "social-icon")}<span>TikTok</span></a>
+                <a class="social-link" href="${SHOP_LINKS.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${icon("facebook", "social-icon")}<span>Facebook</span></a>
+                <a class="social-link" href="${SHOP_LINKS.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${icon("instagram", "social-icon")}<span>Instagram</span></a>
+                <a class="social-link" href="${SHOP_LINKS.twitter}" target="_blank" rel="noopener" aria-label="Twitter">${icon("twitter", "social-icon")}<span>Twitter</span></a>
             </div>
             <p class="legal-note">Copyright &copy; ${new Date().getFullYear()} Kiyakuda.</p>
         `;
@@ -440,22 +416,28 @@ function initCatalogPage() {
     const emptyState = document.querySelector("[data-empty-state]");
     const counter = document.querySelector("[data-result-count]");
     const searchInput = document.querySelector("[data-product-search]");
-    const filterBar = document.querySelector("[data-category-filters]");
+    const categoryInput = document.querySelector("[data-category-input]");
+    const categoryOptions = document.querySelector("[data-category-options]");
     const products = sortProducts(PRODUCTS);
-    let activeCategory = "all";
+    const queryParams = new URLSearchParams(window.location.search);
+    const categories = [...new Set(products.map((product) => product.category))].sort((a, b) => a.localeCompare(b, "fr"));
 
-    if (filterBar) {
-        const categories = ["all", ...new Set(products.map((product) => product.category))];
-        filterBar.innerHTML = categories.map((category) => {
-            const label = category === "all" ? "Tout" : category;
-            return `<button class="ghost-button filter-chip${category === "all" ? " is-selected" : ""}" type="button" data-category-chip="${escapeAttribute(category)}">${escapeHtml(label)}</button>`;
-        }).join("");
+    if (categoryOptions) {
+        categoryOptions.innerHTML = categories.map((category) => `<option value="${escapeAttribute(category)}"></option>`).join("");
     }
 
-    const render = (query = "") => {
+    if (searchInput) {
+        searchInput.value = queryParams.get("q") || "";
+    }
+    if (categoryInput) {
+        categoryInput.value = queryParams.get("category") || "";
+    }
+
+    const render = (query = "", selectedCategory = "") => {
         const lowered = query.trim().toLowerCase();
+        const loweredCategory = selectedCategory.trim().toLowerCase();
         const filtered = products.filter((product) => {
-            const categoryMatch = activeCategory === "all" || product.category === activeCategory;
+            const categoryMatch = !loweredCategory || product.category.toLowerCase().includes(loweredCategory);
             return categoryMatch && (
                 product.name.toLowerCase().includes(lowered)
                 || product.id.toLowerCase().includes(lowered)
@@ -469,19 +451,9 @@ function initCatalogPage() {
         if (emptyState) emptyState.classList.toggle("is-hidden", filtered.length !== 0);
     };
 
-    render();
-    if (searchInput) searchInput.addEventListener("input", (event) => render(event.target.value));
-    if (filterBar) {
-        filterBar.querySelectorAll("[data-category-chip]").forEach((button) => {
-            button.addEventListener("click", () => {
-                activeCategory = button.getAttribute("data-category-chip");
-                filterBar.querySelectorAll("[data-category-chip]").forEach((item) => {
-                    item.classList.toggle("is-selected", item === button);
-                });
-                render(searchInput ? searchInput.value : "");
-            });
-        });
-    }
+    render(searchInput ? searchInput.value : "", categoryInput ? categoryInput.value : "");
+    if (searchInput) searchInput.addEventListener("input", (event) => render(event.target.value, categoryInput ? categoryInput.value : ""));
+    if (categoryInput) categoryInput.addEventListener("input", (event) => render(searchInput ? searchInput.value : "", event.target.value));
 }
 
 function initProductPage() {
@@ -933,10 +905,10 @@ function getPaymentMethodConfig(method) {
     const methods = {
         mixx: {
             type: "mobile",
-            label: "Mixx Togo",
-            title: "Recu de paiement Mixx",
-            helper: "Finalisez le paiement Mixx depuis votre telephone.",
-            logo: "logo-mixx.svg",
+            label: "Yas / Mixx",
+            title: "Recu de paiement Yas",
+            helper: "Finalisez le paiement Yas Mixx depuis votre telephone.",
+            logo: "logo-yas-official.jpeg",
             merchant: "+228 93 32 63 88",
             launch: () => buildMixxPaymentHref()
         },
@@ -945,7 +917,7 @@ function getPaymentMethodConfig(method) {
             label: "Moov Togo",
             title: "Recu de paiement Moov",
             helper: "Finalisez le paiement Moov depuis votre telephone.",
-            logo: "logo-moov.svg",
+            logo: "logo-moov-official.png",
             merchant: "+228 79 66 48 63",
             launch: (order) => buildMoovPaymentHref(order)
         },
@@ -1299,6 +1271,8 @@ function icon(name, className = "icon-svg") {
         close: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 6 12 12"></path><path d="M18 6 6 18"></path></svg>`,
         copy: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
         home: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.8V21h14V9.8"></path></svg>`,
+        facebook: `<svg class="${className}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.4l.4-3h-2.8V9.2c0-.9.3-1.5 1.6-1.5H16V5.1c-.2 0-.9-.1-1.8-.1-1.8 0-3.1 1.1-3.1 3.3V11H8.8v3h2.3v7h2.4Z"/></svg>`,
+        instagram: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>`,
         layers: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 4.5L12 12 3 7.5 12 3Z"></path><path d="m3 12 9 4.5 9-4.5"></path><path d="m3 16.5 9 4.5 9-4.5"></path></svg>`,
         mail: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>`,
         menu: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"></path><path d="M4 12h16"></path><path d="M4 17h16"></path></svg>`,
@@ -1310,8 +1284,10 @@ function icon(name, className = "icon-svg") {
         shop: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16l-1 4a2 2 0 0 1-2 1.5H7A2 2 0 0 1 5 11L4 7Z"></path><path d="M5 12.5V20h14v-7.5"></path><path d="M9 20v-5h6v5"></path><path d="M6 7V4h12v3"></path></svg>`,
         sun: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2.2"></path><path d="M12 19.8V22"></path><path d="m4.9 4.9 1.6 1.6"></path><path d="m17.5 17.5 1.6 1.6"></path><path d="M2 12h2.2"></path><path d="M19.8 12H22"></path><path d="m4.9 19.1 1.6-1.6"></path><path d="m17.5 6.5 1.6-1.6"></path></svg>`,
         tag: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 13-7 7-9-9V4h7l9 9Z"></path><circle cx="7.5" cy="7.5" r="1"></circle></svg>`,
+        tiktok: `<svg class="${className}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14.6 3c.4 1.8 1.4 3.1 3.3 3.6v2.6c-1.2 0-2.2-.3-3.2-.8v5.2c0 3.7-2.3 6.1-6 6.1-2.6 0-4.7-1.6-5.5-4-.3-.8-.3-1.6-.2-2.4.3-2.6 2.5-4.7 5.3-4.9 1-.1 1.6 0 2.2.2v2.8c-.5-.2-1-.3-1.6-.2-1.4.1-2.6 1.2-2.8 2.6-.3 1.9 1.2 3.5 3 3.5 1.7 0 2.9-1.3 2.9-3.2V3h2.6Z"/></svg>`,
         telegram: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 3-8.5 18-2.8-6.2L3 12.3 21 3Z"></path><path d="M9.7 14.8 21 3"></path></svg>`,
         truck: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 17H6a2 2 0 0 1-2-2V7h10v10Z"></path><path d="M14 11h3l3 3v3h-6v-6Z"></path><circle cx="7.5" cy="18.5" r="1.5"></circle><circle cx="17.5" cy="18.5" r="1.5"></circle></svg>`,
+        twitter: `<svg class="${className}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.1l-4.8-6.2L6.7 22H3.6l7.3-8.4L1.3 2h6.2l4.3 5.7L18.9 2Zm-1.1 18h1.7L6.6 3.9H4.8L17.8 20Z"/></svg>`,
         user: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 20a8 8 0 0 1 16 0"></path></svg>`,
         wallet: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z"></path><path d="M16 12h4"></path><path d="M3 9h17"></path></svg>`,
         whatsapp: `<svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5A8.5 8.5 0 0 1 7.4 18.9L4 20l1.1-3.1A8.5 8.5 0 1 1 20 11.5Z"></path><path d="M9.5 9.2c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .5.3l.8 2c.1.2 0 .4-.1.6l-.5.6c-.1.1-.2.2-.1.4.4.8 1.1 1.6 2 2.1.2.1.3 0 .4-.1l.6-.7c.2-.2.4-.2.6-.1l1.9.9c.2.1.3.2.3.4v.7c0 .3-.2.6-.5.8-.5.3-1.2.5-2 .3-1.3-.3-2.6-1.2-3.7-2.3-1.1-1.1-2-2.4-2.3-3.7-.2-.8 0-1.5.3-2.1Z"></path></svg>`
