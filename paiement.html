@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Choix du mode de paiement Kiyakuda avec Mixx Togo, Moov Togo et Visa.">
+    <title>Kiyakuda | Choix du paiement</title>
+    <link rel="icon" href="favi.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body data-page="payment-choice">
+    <div class="bg-video-wrap" aria-hidden="true">
+        <video muted loop playsinline preload="none" data-bg-video>
+            <source data-src="bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="brand" href="index.html" aria-label="Kiyakuda accueil">
+                <img src="kiyakuda.png" alt="Logo Kiyakuda">
+                <span class="brand-copy">
+                    <strong>Kiyakuda</strong>
+                    <span>Boutique physique premium</span>
+                </span>
+            </a>
+            <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+            <div class="nav-links" id="site-nav" data-nav-links>
+                <a href="index.html">Accueil</a>
+                <a href="boutique.html">Boutique</a>
+                <a href="panier.html">Panier <span class="cart-pill" data-cart-count>0</span></a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="site-shell section-card reveal">
+                <span class="eyebrow">Choix du paiement</span>
+                <h1>Choisissez votre mode de paiement</h1>
+                <p class="lead">Montant: <strong data-payment-choice-total>0 FCFA</strong>. Reference: <strong data-payment-choice-order>en attente</strong>. La validation finale reste faite par la boutique.</p>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="site-shell payment-shell reveal">
+                <div class="no-order is-hidden" data-no-order>
+                    <strong>Aucune commande enregistree</strong>
+                    <p>Envoyez votre commande depuis le panier avant de passer au paiement.</p>
+                    <a class="primary-button" href="panier.html">Retour au panier</a>
+                </div>
+
+                <div data-order-panel>
+                    <div class="payment-grid payment-grid--choice">
+                        <article class="payment-card payment-card--choice">
+                            <img class="brand-logo-image brand-logo-image--choice" src="logo-mixx.svg" alt="Mixx Togo">
+                            <div class="summary-box">
+                                <div class="summary-row">
+                                    <span>Mode</span>
+                                    <strong>Paiement mobile</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Montant</span>
+                                    <strong data-mixx-amount>0 FCFA</strong>
+                                </div>
+                            </div>
+                            <a class="primary-button" data-direct-mixx href="#"><span data-icon="wallet"></span>Payer avec Mixx</a>
+                        </article>
+
+                        <article class="payment-card payment-card--choice">
+                            <img class="brand-logo-image brand-logo-image--choice" src="logo-moov.svg" alt="Moov Togo">
+                            <div class="summary-box">
+                                <div class="summary-row">
+                                    <span>Mode</span>
+                                    <strong>Paiement mobile</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Montant</span>
+                                    <strong data-moov-amount>0 FCFA</strong>
+                                </div>
+                            </div>
+                            <a class="primary-button" data-direct-moov href="#"><span data-icon="wallet"></span>Payer avec Moov</a>
+                        </article>
+
+                        <article class="payment-card payment-card--choice">
+                            <img class="brand-logo-image brand-logo-image--choice" src="logo-visa.svg" alt="Visa">
+                            <div class="summary-box">
+                                <div class="summary-row">
+                                    <span>Montant</span>
+                                    <strong data-payment-choice-total>0 FCFA</strong>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Mode</span>
+                                    <strong>Carte bancaire</strong>
+                                </div>
+                            </div>
+                            <a class="secondary-button" data-direct-visa href="#"><span data-icon="card"></span>Payer par carte</a>
+                            <p class="small-note">Le paiement carte ouvre une page securisee pour finaliser le reglement.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-shell">
+            <div class="footer-top">
+                <div>
+                    <strong>Kiyakuda</strong>
+                    <p class="copy-muted">Choix du paiement pour la commande en cours.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Accueil</a>
+                <a href="boutique.html">Boutique</a>
+                <a href="panier.html">Panier</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

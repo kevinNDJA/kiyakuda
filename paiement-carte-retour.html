@@ -3,20 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kiyakuda, boutique en ligne de produits physiques avec commande rapide, paiement et livraison depuis Kara.">
-    <meta name="keywords" content="Kiyakuda, boutique, e-commerce, Togo, produits physiques, panier, livraison, Mixx, Moov">
-    <title>Kiyakuda | Boutique e-commerce</title>
+    <meta name="description" content="Retour de paiement carte pour une commande Kiyakuda.">
+    <title>Kiyakuda | Retour paiement carte</title>
     <link rel="icon" href="favi.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <script src="app.js" defer></script>
 </head>
-<body data-page="home">
-    <div class="bg-video-wrap" aria-hidden="true">
-        <video muted loop playsinline preload="none" data-bg-video>
-            <source data-src="bg.mp4" type="video/mp4">
-        </video>
-    </div>
-
+<body data-page="payment-return">
     <header class="site-header">
         <nav class="navbar">
             <a class="brand" href="index.html" aria-label="Kiyakuda accueil">
@@ -38,15 +31,15 @@
 
     <main>
         <section class="page-hero">
-            <div class="site-shell">
-                <article class="hero-copy hero-copy--home reveal">
-                    <span class="eyebrow cinema-line">Kiyakuda</span>
-                    <h1 class="cinema-line cinema-line--delay-1">Achetez vite. Payez simplement.</h1>
-                    <p class="lead cinema-line cinema-line--delay-2">Des articles selectionnes et une livraison organisee depuis Kara.</p>
-                    <div class="hero-actions cinema-line cinema-line--delay-3">
-                        <a class="primary-button is-glow" href="boutique.html"><span data-icon="shop"></span>Visiter la boutique</a>
-                    </div>
-                </article>
+            <div class="site-shell section-card reveal is-visible">
+                <span class="eyebrow">Paiement carte</span>
+                <h1 data-payment-return-title>Le retour de paiement a ete recu.</h1>
+                <p class="lead" data-payment-return-copy>La commande reste soumise a validation par la boutique avant confirmation finale envoyee par email.</p>
+                <p class="small-note">Reference: <strong data-payment-return-reference>en attente</strong></p>
+                <div class="action-row" style="margin-top:1rem;">
+                    <a class="primary-button" href="panier.html"><span data-icon="cart"></span>Retour au panier</a>
+                    <a class="secondary-button" href="boutique.html"><span data-icon="shop"></span>Retour a la boutique</a>
+                </div>
             </div>
         </section>
     </main>
@@ -56,14 +49,13 @@
             <div class="footer-top">
                 <div>
                     <strong>Kiyakuda</strong>
-                    <p class="copy-muted">Boutique en ligne de produits physiques avec commande rapide et validation manuelle.</p>
+                    <p class="copy-muted">Retour de paiement carte.</p>
                 </div>
             </div>
             <div class="footer-links">
+                <a href="index.html">Accueil</a>
                 <a href="boutique.html">Boutique</a>
                 <a href="panier.html">Panier</a>
-                <a href="politique-livraison.html">Politique de livraison</a>
-                <a href="politique-confidentialite.html">Politique de confidentialite</a>
                 <a href="contact.html">Contact</a>
             </div>
         </div>

@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Kiyakuda, boutique en ligne de produits physiques avec commande rapide, paiement et livraison depuis Kara.">
-    <meta name="keywords" content="Kiyakuda, boutique, e-commerce, Togo, produits physiques, panier, livraison, Mixx, Moov">
-    <title>Kiyakuda | Boutique e-commerce</title>
+    <meta name="description" content="Catalogue Kiyakuda classe de A a Z avec recherche produit, prix, references uniques et ajout rapide au panier.">
+    <title>Kiyakuda | Boutique</title>
     <link rel="icon" href="favi.png" type="image/png">
     <link rel="stylesheet" href="style.css">
     <script src="app.js" defer></script>
 </head>
-<body data-page="home">
+<body data-page="catalog">
     <div class="bg-video-wrap" aria-hidden="true">
         <video muted loop playsinline preload="none" data-bg-video>
             <source data-src="bg.mp4" type="video/mp4">
@@ -38,15 +37,29 @@
 
     <main>
         <section class="page-hero">
-            <div class="site-shell">
-                <article class="hero-copy hero-copy--home reveal">
-                    <span class="eyebrow cinema-line">Kiyakuda</span>
-                    <h1 class="cinema-line cinema-line--delay-1">Achetez vite. Payez simplement.</h1>
-                    <p class="lead cinema-line cinema-line--delay-2">Des articles selectionnes et une livraison organisee depuis Kara.</p>
-                    <div class="hero-actions cinema-line cinema-line--delay-3">
-                        <a class="primary-button is-glow" href="boutique.html"><span data-icon="shop"></span>Visiter la boutique</a>
-                    </div>
-                </article>
+            <div class="site-shell section-card reveal">
+                <span class="eyebrow">Boutique</span>
+                <h1>Tous les produits</h1>
+                <p class="lead">Catalogue classe par ordre alphabetique avec recherche rapide et ajout direct au panier.</p>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="site-shell section-card reveal">
+                <div class="action-row" data-category-filters style="margin-bottom: 1rem;"></div>
+                <div class="catalog-toolbar">
+                    <label class="search-field" aria-label="Rechercher un produit">
+                        <span data-icon="search"></span>
+                        <input type="search" placeholder="Rechercher des produits dans la boutique" data-product-search>
+                    </label>
+                    <span class="sort-note">Classement A - Z : <strong data-result-count>0 produit</strong></span>
+                </div>
+                <div class="product-grid" data-product-grid></div>
+                <div class="empty-state is-hidden" data-empty-state>
+                    <span class="eyebrow">Resultat</span>
+                    <h2>Il semble que cet article ne soit pas disponible.</h2>
+                    <p>Essayez un autre nom de produit, une autre categorie ou une autre reference pour consulter ce qui est actuellement propose dans la boutique.</p>
+                </div>
             </div>
         </section>
     </main>
@@ -56,15 +69,15 @@
             <div class="footer-top">
                 <div>
                     <strong>Kiyakuda</strong>
-                    <p class="copy-muted">Boutique en ligne de produits physiques avec commande rapide et validation manuelle.</p>
+                    <p class="copy-muted">Catalogue de produits physiques, fiches detaillees et ajout rapide au panier avant validation de commande.</p>
                 </div>
             </div>
             <div class="footer-links">
-                <a href="boutique.html">Boutique</a>
+                <a href="index.html">Accueil</a>
+                <a href="contact.html">Contact</a>
                 <a href="panier.html">Panier</a>
                 <a href="politique-livraison.html">Politique de livraison</a>
                 <a href="politique-confidentialite.html">Politique de confidentialite</a>
-                <a href="contact.html">Contact</a>
             </div>
         </div>
     </footer>

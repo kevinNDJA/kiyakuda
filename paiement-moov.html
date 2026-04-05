@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Recu de paiement Moov pour une commande Kiyakuda.">
+    <title>Kiyakuda | Paiement Moov</title>
+    <link rel="icon" href="favi.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body data-page="payment" data-payment="moov">
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="brand" href="index.html" aria-label="Kiyakuda accueil">
+                <img src="kiyakuda.png" alt="Logo Kiyakuda">
+                <span class="brand-copy">
+                    <strong>Kiyakuda</strong>
+                    <span>Boutique physique premium</span>
+                </span>
+            </a>
+            <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+            <div class="nav-links" id="site-nav" data-nav-links>
+                <a href="index.html">Accueil</a>
+                <a href="boutique.html">Boutique</a>
+                <a href="panier.html">Panier <span class="cart-pill" data-cart-count>0</span></a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="site-shell payment-shell reveal is-visible">
+                <div class="receipt-head">
+                    <img class="brand-logo-image brand-logo-image--choice" data-payment-logo src="logo-moov.svg" alt="Moov Togo">
+                    <div>
+                        <span class="eyebrow" data-payment-label>Moov Togo</span>
+                        <h1 data-payment-title>Recu de paiement Moov</h1>
+                        <p class="lead" data-payment-helper>Finalisez le paiement Moov depuis votre telephone.</p>
+                    </div>
+                </div>
+
+                <div class="no-order is-hidden" data-no-order>
+                    <strong>Aucune commande disponible</strong>
+                    <p>Revenez au panier puis relancez le paiement.</p>
+                    <a class="primary-button" href="panier.html">Retour au panier</a>
+                </div>
+
+                <div class="receipt-paper" data-payment-panel>
+                    <div class="summary-row">
+                        <span>Reference</span>
+                        <strong data-payment-reference>en attente</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Montant</span>
+                        <strong data-payment-amount>0 FCFA</strong>
+                    </div>
+                    <div class="summary-row">
+                        <span>Livraison</span>
+                        <strong data-payment-region>Region selectionnee</strong>
+                    </div>
+                    <div class="summary-row" data-payment-merchant-row>
+                        <span>Numero paiement</span>
+                        <strong data-payment-merchant>+228 79 66 48 63</strong>
+                    </div>
+                    <div class="field" data-payment-mobile-link-wrap>
+                        <label for="moov-mobile-link">Lien mobile</label>
+                        <input id="moov-mobile-link" class="readonly-field" type="text" readonly data-payment-mobile-link>
+                    </div>
+                    <div class="action-row">
+                        <a class="primary-button" data-payment-action href="#"><span data-icon="phone"></span>Finaliser</a>
+                        <button class="secondary-button is-hidden" type="button" data-payment-secondary-action></button>
+                    </div>
+                    <p class="small-note" data-payment-note></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-shell">
+            <div class="footer-top">
+                <div>
+                    <strong>Kiyakuda</strong>
+                    <p class="copy-muted">Recu de paiement simple pour finaliser la commande.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="paiement.html">Choix du paiement</a>
+                <a href="panier.html">Panier</a>
+                <a href="boutique.html">Boutique</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

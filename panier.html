@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Panier Kiyakuda avec recapitulatif des articles, calcul de livraison par region, formulaire de livraison et validation de commande.">
+    <title>Kiyakuda | Panier</title>
+    <link rel="icon" href="favi.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body data-page="cart">
+    <div class="bg-video-wrap" aria-hidden="true">
+        <video muted loop playsinline preload="none" data-bg-video>
+            <source data-src="bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <header class="site-header">
+        <nav class="navbar">
+            <a class="brand" href="index.html" aria-label="Kiyakuda accueil">
+                <img src="kiyakuda.png" alt="Logo Kiyakuda">
+                <span class="brand-copy">
+                    <strong>Kiyakuda</strong>
+                    <span>Boutique physique premium</span>
+                </span>
+            </a>
+            <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="site-nav">Menu</button>
+            <div class="nav-links" id="site-nav" data-nav-links>
+                <a href="index.html">Accueil</a>
+                <a href="boutique.html">Boutique</a>
+                <a href="panier.html">Panier <span class="cart-pill" data-cart-count>0</span></a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="site-shell section-card reveal">
+                <span class="eyebrow">Panier</span>
+                <h1>Verifiez votre commande</h1>
+                <p class="lead">Choisissez la region, remplissez vos informations puis passez au paiement.</p>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="site-shell cart-layout reveal">
+                <div class="summary-panel">
+                    <div class="section-card">
+                        <div class="section-heading">
+                            <div>
+                                <span class="eyebrow">Recapitulatif</span>
+                                <h2>Articles selectionnes</h2>
+                            </div>
+                        </div>
+                        <div class="cart-list" data-cart-list></div>
+                        <div class="empty-state is-hidden" data-cart-empty>
+                            <span class="eyebrow">Panier vide</span>
+                            <h2>Votre panier ne contient pas encore de produit.</h2>
+                            <p>Ajoutez un article depuis la boutique ou depuis une fiche produit pour commencer votre commande.</p>
+                            <a class="primary-button" href="boutique.html">Retour a la boutique</a>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="summary-panel">
+                    <div class="section-card">
+                        <span class="eyebrow">Calcul total</span>
+                        <div class="summary-box">
+                            <div class="field">
+                                <label for="shipping-region">Region de livraison</label>
+                                <select id="shipping-region" data-shipping-region></select>
+                            </div>
+                            <div class="summary-row">
+                                <span>Sous-total produits</span>
+                                <strong data-subtotal>0 FCFA</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Frais de livraison</span>
+                                <strong data-shipping-fee>0 FCFA</strong>
+                            </div>
+                            <div class="summary-row is-total">
+                                <span>Total a regler</span>
+                                <strong data-total>0 FCFA</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section-card">
+                        <span class="eyebrow">Formulaire client</span>
+                        <form data-order-form>
+                            <div class="form-grid">
+                                <div class="field">
+                                    <label for="last-name">Nom</label>
+                                    <input id="last-name" name="last-name" type="text" placeholder="Votre nom">
+                                </div>
+                                <div class="field">
+                                    <label for="first-name">Prenom</label>
+                                    <input id="first-name" name="first-name" type="text" placeholder="Votre prenom">
+                                </div>
+                                <div class="field">
+                                    <label for="city">Ville</label>
+                                    <input id="city" name="city" type="text" placeholder="Votre ville">
+                                </div>
+                                <div class="field">
+                                    <label for="email">Email</label>
+                                    <input id="email" name="email" type="email" placeholder="Votre email">
+                                </div>
+                                <div class="field">
+                                    <label for="phone">Numero de telephone</label>
+                                    <input id="phone" name="phone" type="tel" placeholder="+228 ...">
+                                </div>
+                            </div>
+
+                            <div class="checkbox-group" style="margin-top: 1rem;">
+                                <label class="checkbox-row">
+                                    <input type="checkbox" name="delivery-policy">
+                                    <span>J'accepte la <a href="politique-livraison.html" target="_blank" rel="noopener">politique de livraison</a> et je comprends que les frais varient selon la region.</span>
+                                </label>
+                                <label class="checkbox-row">
+                                    <input type="checkbox" name="privacy-policy">
+                                    <span>J'accepte la <a href="politique-confidentialite.html" target="_blank" rel="noopener">politique de confidentialite</a> et j'autorise le traitement des informations de livraison pour cette commande.</span>
+                                </label>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="status-panel is-hidden" data-order-status></div>
+
+                    <div class="section-card">
+                        <span class="eyebrow">Paiement</span>
+                        <div class="summary-box">
+                            <div class="summary-row">
+                                <span>Montant actuel</span>
+                                <strong data-order-total-preview>0 FCFA</strong>
+                            </div>
+                            <div class="summary-row">
+                                <span>Reference</span>
+                                <strong data-order-ref-preview>en attente</strong>
+                            </div>
+                            <div class="action-row" style="margin-top: 1rem;">
+                                <button class="primary-button" type="button" data-checkout-button><span data-icon="wallet"></span>Payer</button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-shell">
+            <div class="footer-top">
+                <div>
+                    <strong>Kiyakuda</strong>
+                    <p class="copy-muted">Le panier centralise les quantites, la livraison, le formulaire client et l'acces aux pages de paiement apres validation.</p>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="boutique.html">Boutique</a>
+                <a href="politique-livraison.html">Politique de livraison</a>
+                <a href="politique-confidentialite.html">Politique de confidentialite</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
